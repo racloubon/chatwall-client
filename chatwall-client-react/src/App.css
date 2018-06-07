@@ -2,3 +2,11 @@
   text-align: center;
   color: white;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  color: gray;
+  background-color: lightgreen;
+  padding: 0.5em;
+}
