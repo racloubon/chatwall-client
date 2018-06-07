@@ -8,6 +8,7 @@ import reducers from './reducers';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import './index.css';
+import './containers/Register.css';
 
 const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ &&
   window.__REDUX_DEVTOOLS_EXTENSION__());

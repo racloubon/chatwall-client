@@ -1,12 +1,15 @@
 import React from 'react';
-import { Tag , Buttton } from 'antd';
+import { Button } from 'antd';
+const ButtonGroup = Button.Group;
 
 class Username extends React.Component {
   render () {
     return (
       <div>
-        <Tag>Test User Tag</Tag>
-        <Button type="primary">LogOut</Button>
+        <ButtonGroup>
+          <Button>Hello {this.props.username}</Button>
+          <Button onClick={this.props.logOutClick}>LogOut</Button>
+        </ButtonGroup>
       </div>
     );
   }

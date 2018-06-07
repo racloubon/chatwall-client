@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import LoginForm from '../components/LoginForm2';
-// import Username from 
+import LoginForm from '../components/LoginForm';
+import Username from  '../components/Username';
 import btoa from 'btoa';
 
 class LogIn extends Component {
@@ -42,8 +42,7 @@ class LogIn extends Component {
     } else {
       return (
         <div>
-          <div>You are logged as {this.props.loginState.username}</div>
-          <button onClick={this.toggleLoginState}>LogOut</button>
+          <Username username={this.props.loginState.username} logOutClick={this.toggleLoginState}/>
         </div>
       );
     }

@@ -1,45 +1,71 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { Form, Icon, Input, Button } from 'antd';
+const FormItem = Form.Item;
 
-class LoginForm extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      name: '',
-      password: ''
-    };
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+class HorizontalLoginForm extends React.Component {
+  componentDidMount() {
+    // To disabled submit button at the beginning.
+    this.props.form.validateFields();
   }
 
-  handleInputChange (event) {
-    const target = event.target;
-    this.setState({
-      [target.name]: target.value
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        this.props.loginSubmit(values);
+      }
     });
   }
+  render() {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
 
-  handleSubmit (event) {
-    alert('Username submitted: ' + this.state.username + '\n' +
-          'Password submitted: ' + this.state.password);
-    event.preventDefault();
-  }
-
-  render () {
+    // Only show error after a field is touched.
+    const userNameError = isFieldTouched('userName') && getFieldError('userName');
+    const passwordError = isFieldTouched('password') && getFieldError('password');
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Username:
-          <input name="username" type="text" value={this.state.value} onChange={this.handleInputChange} />
-        </label>
-        <label>
-          Password:
-          <input name="password" type="password" value={this.state.value} onChange={this.handleInputChange} />
-        </label>
-        <input type="submit" value="LogIn " />
-      </form>
+      <Form layout="inline" onSubmit={this.handleSubmit}>
+        <FormItem
+          validateStatus={userNameError ? 'error' : ''}
+          help={userNameError || ''}
+        >
+          {getFieldDecorator('userName', {
+            rules: [{ required: true, message: 'Please input your username!' }],
+          })(
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+          )}
+        </FormItem>
+        <FormItem
+          validateStatus={passwordError ? 'error' : ''}
+          help={passwordError || ''}
+        >
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password!' }],
+          })(
+            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+          )}
+        </FormItem>
+        <FormItem>
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={hasErrors(getFieldsError())}
+          >
+            Log in
+          </Button>
+        </FormItem>
+      </Form>
     );
   }
 }
 
-export default LoginForm;
+const WrappedHorizontalLoginForm = Form.create()(HorizontalLoginForm);
+
+ReactDOM.render(<WrappedHorizontalLoginForm />, document.getElementById('root'));
+
+export default WrappedHorizontalLoginForm;

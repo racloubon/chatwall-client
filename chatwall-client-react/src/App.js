@@ -6,6 +6,7 @@ import Intro from './components/Intro';
 import NoMatch from './components/NoMatch';
 import Test from './components/Test';
 import LogIn from './containers/LogIn';
+import Register from './containers/Register';
 
 class App extends Component {
   render () {
@@ -15,11 +16,14 @@ class App extends Component {
           <div className="chatWallTitle">ChatWall</div>
           <LogIn/>
         </div>
-        <Switch>
-          <Route exact path='/' component={Intro}/>
-          <Route path='/test' component={Test}/>
-          <Route component={NoMatch}/>
-        </Switch>
+        <div className="switchContainer">
+          <Switch>
+            <Route exact path='/' component={Intro}/>
+            <Route path='/test' component={Test}/>
+            <Route path='/register' component={Register}/>
+            <Route component={NoMatch}/>
+          </Switch>
+        </div>
       </div>
     );
   }
