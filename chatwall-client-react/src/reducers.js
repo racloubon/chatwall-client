@@ -2,23 +2,23 @@ import { combineReducers } from 'redux';
 
 const loginInitialState = {
   logged: false,
-  auth_token: undefined,
+  jwt_token: undefined,
   username: undefined,
   error: false
 };
 
 const login = (state = loginInitialState, action) => {
   switch (action.type) {
-  case 'LOGIN_INIT':
+  case 'LOG_OUT':
     return ({
       ...state,
-      logged: action.logResult
+      ...loginInitialState
     });
   case 'LOGIN_SUCCESSFULL':
     return ({
       ...state,
       logged: true,
-      auth_token: action.auth_token,
+      jwt_token: action.jwt_token,
       username: action.username,
       errors: false
     });
@@ -31,10 +31,29 @@ const login = (state = loginInitialState, action) => {
   return state;
 };
 
+
+const messagesInitialState = {
+  messages: [],
+  channel: null
+};
+
+const messages = (state = messagesInitialState, action) => {
+  switch (action.type) {
+  case 'SET_MESSAGES':
+    return ({
+      ...state,
+      messages: action.messages,
+      channel: action.channel
+    });
+  }
+  return state;
+};
+
 // Combining reducers
 
 const reducers = combineReducers({
-  login
+  login,
+  messages
 });
 
 export default reducers;

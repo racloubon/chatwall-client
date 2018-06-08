@@ -8,9 +8,14 @@ import reducers from './reducers';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import './index.css';
+import { loadState, saveState } from './localStorageHelper';
 
-const store = createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ &&
+const store = createStore(reducers, loadState(),window.__REDUX_DEVTOOLS_EXTENSION__ &&
   window.__REDUX_DEVTOOLS_EXTENSION__());
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
 
 ReactDOM.render(
   <Provider store = {store}>

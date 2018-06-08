@@ -8,7 +8,7 @@ class GoToChatWall extends React.Component {
       <Search
         placeholder="Channel name"
         enterButton="Go"
-        onSearch={value => console.log(value)}
+        onSearch={value => this.props.onGoClick(value)}
       />
     );
   }

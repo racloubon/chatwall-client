@@ -9,7 +9,6 @@ import './Register.css';
 class Register extends Component {
 
   checkRegisterValues = (values) => {
-    // console.log(values);
     fetch('http://localhost:3000/users',
     {
       method: 'POST',
@@ -55,9 +54,9 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'LOGIN_INIT',
     logResult
   }),
-  loginSuccessfull: (auth_token, username) => dispatch({
+  loginSuccessfull: (jwt_token, username) => dispatch({
     type: 'LOGIN_SUCCESSFULL',
-    auth_token,
+    jwt_token,
     username
   }),
   loginError: (error) => dispatch ({

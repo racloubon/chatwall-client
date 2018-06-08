@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import LoginForm from '../components/LoginForm';
 import Username from  '../components/Username';
 import btoa from 'btoa';
+import mapDispatchToProps from '../mapDispatchToProps';
+import { Redirect } from 'react-router';
 
 class LogIn extends Component {
   constructor (props) {
@@ -11,7 +13,6 @@ class LogIn extends Component {
   }
 
   checkLogin (values) {
-    console.log(values);
     fetch('http://localhost:3000/sign-in',
     {
       method: 'GET',
@@ -21,15 +22,14 @@ class LogIn extends Component {
     })
     .then(data => data.json())
     .then(res => {
-      console.log(res);
       if(res.jwt_token) {
         this.props.loginSuccessfull(res.jwt_token, res.username)
       }
     });
   }
 
-  toggleLoginState = () => {
-    this.props.startLogin(!this.props.loginState.logged)
+  logOut = () => {
+    this.props.logOut();
   }
 
   renderLoginState = () => {
@@ -37,12 +37,13 @@ class LogIn extends Component {
       return (
         <div>
           <LoginForm loginSubmit={this.checkLogin}/>
+          <Redirect to='/'/>
         </div>
       );
     } else {
       return (
         <div>
-          <Username username={this.props.loginState.username} logOutClick={this.toggleLoginState}/>
+          <Username username={this.props.loginState.username} logOutClick={this.logOut}/>
         </div>
       );
     }
@@ -57,19 +58,9 @@ class LogIn extends Component {
 
 
 const mapStateToProps = (state) => ({
-  loginState: state.login
+  loginState: state.login,
+  messages: state.messages
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  startLogin: (logResult) => dispatch({
-    type: 'LOGIN_INIT',
-    logResult
-  }),
-  loginSuccessfull: (auth_token, username) => dispatch({
-    type: 'LOGIN_SUCCESSFULL',
-    auth_token,
-    username
-  })
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
