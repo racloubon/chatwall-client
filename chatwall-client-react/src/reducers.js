@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 const loginInitialState = {
   logged: false,
   auth_token: undefined,
-  username: undefined
+  username: undefined,
+  error: false
 };
 
 const login = (state = loginInitialState, action) => {
@@ -18,7 +19,13 @@ const login = (state = loginInitialState, action) => {
       ...state,
       logged: true,
       auth_token: action.auth_token,
-      username: action.username
+      username: action.username,
+      errors: false
+    });
+  case 'LOGIN_ERROR':
+    return ({
+      ...state,
+      error: action.error
     });
   }
   return state;

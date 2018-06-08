@@ -1,29 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RegisterForm from '../components/RegisterForm';
+import { Alert } from 'antd';
+import { Redirect } from 'react-router';
+
 import './Register.css';
 
 class Register extends Component {
+
   checkRegisterValues = (values) => {
-    console.log(values);
-    // fetch('http://localhost:3000/users',
-    // {
-    //   method: 'POST',
-    //   body: JSON.stringify(values)
-    // })
-    // .then(data => data.json())
-    // .then(res => {
-    //   console.log(res);
-    //   if(res.jwt_token) {
-    //     this.props.loginSuccessfull(res.jwt_token, res.username)
-    //   }
-    // });
+    // console.log(values);
+    fetch('http://localhost:3000/users',
+    {
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res.jwt_token) {
+        this.props.loginSuccessfull(res.jwt_token, res.username)
+      } else {
+        this.props.loginError('This user already exists');
+        if (res.errors) {
+          this.props.loginError(res.errors);
+        }
+      }
+    });
+  }
+  renderError() {
+    if (this.props.loginState.error) {
+      return <Alert message={this.props.loginState.error} type="error" showIcon />
+    }
   }
   render () {
+    if(this.props.loginState.logged) return <Redirect to='/main'/>
+
     return (
       <div >
         <h2 className="registerTitle">Register now!</h2>
-        <RegisterForm registerSubmit={this.checkRegisterValues}/>
+        <RegisterForm registerSubmit={this.checkRegisterValues} errors={this.props.loginState.errors}/>
+        {this.renderError()}
       </div>
     );
   }
@@ -43,8 +60,9 @@ const mapDispatchToProps = (dispatch) => ({
     auth_token,
     username
   }),
-  createUser: () => dispatch ({
-    type: 'AHA'
+  loginError: (error) => dispatch ({
+    type: 'LOGIN_ERROR',
+    error
   })
 });
 

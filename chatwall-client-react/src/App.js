@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Intro from './components/Intro';
 import NoMatch from './components/NoMatch';
 import Test from './components/Test';
+import CreateChannelButton from './components/CreateChannelButton';
 import LogIn from './containers/LogIn';
 import Register from './containers/Register';
 
@@ -18,9 +19,10 @@ class App extends Component {
         </div>
         <div className="switchContainer">
           <Switch>
-            <Route exact path='/' component={Intro}/>
+            <Route exact path='/' component={Register}/>
+            <Route path='/main' component={Intro}/>
             <Route path='/test' component={Test}/>
-            <Route path='/register' component={Register}/>
+            <Route path='/createchannel' component={CreateChannelButton}/>
             <Route component={NoMatch}/>
           </Switch>
         </div>
