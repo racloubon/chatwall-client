@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import LoginForm from '../components/LoginForm';
 import Username from  '../components/Username';
 import btoa from 'btoa';
 import mapDispatchToProps from '../mapDispatchToProps';
 import { Redirect } from 'react-router';
+import host from '../config/host';
 
 class LogIn extends Component {
   constructor (props) {
@@ -13,7 +15,7 @@ class LogIn extends Component {
   }
 
   checkLogin (values) {
-    fetch('http://localhost:3000/sign-in',
+    fetch(host + '/sign-in',
     {
       method: 'GET',
       headers: {
@@ -30,6 +32,7 @@ class LogIn extends Component {
 
   logOut = () => {
     this.props.logOut();
+    this.props.unSetMessages();
   }
 
   renderLoginState = () => {

@@ -34,7 +34,8 @@ const login = (state = loginInitialState, action) => {
 
 const messagesInitialState = {
   messages: [],
-  channel: null
+  channel: null,
+  error: false
 };
 
 const messages = (state = messagesInitialState, action) => {
@@ -43,7 +44,25 @@ const messages = (state = messagesInitialState, action) => {
     return ({
       ...state,
       messages: action.messages,
-      channel: action.channel
+      channel: action.channel,
+      error: false
+    });
+  case 'SET_MESSAGES_ERROR':
+    return ({
+      ...state,
+      error: action.error
+    });
+  case 'UNSET_MESSAGES_ERROR':
+    return ({
+      ...state,
+      error: false
+    });
+  case 'UNSET_MESSAGES':
+    return ({
+      ...state,
+      messages: [],
+      channel: null,
+      error: false
     });
   }
   return state;

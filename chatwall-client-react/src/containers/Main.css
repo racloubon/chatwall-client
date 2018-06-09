@@ -11,3 +11,7 @@
 .goToChatWallContainer {
   flex: 1;
 }
+
+.errorMessageContainer {
+  margin-top: 1em;
+}

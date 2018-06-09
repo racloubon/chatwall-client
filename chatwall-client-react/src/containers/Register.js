@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import RegisterForm from '../components/RegisterForm';
 import { Alert } from 'antd';
 import { Redirect } from 'react-router';
+import host from '../config/host';
 
 import './Register.css';
 
 class Register extends Component {
 
   checkRegisterValues = (values) => {
-    fetch('http://localhost:3000/users',
+    fetch(host + '/users',
     {
       method: 'POST',
       body: JSON.stringify(values),

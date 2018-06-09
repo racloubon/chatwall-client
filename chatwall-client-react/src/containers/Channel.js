@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+
 import NotLoggedError from '../components/NotLoggedError';
 import MessageList from '../components/MessageList';
+import host from '../config/host';
 
 
 class Channel extends Component {
 
   getMessages = () => {
     if (!this.props.loginState.logged) return;
-    fetch('http://localhost:3000/messages?channel=test channel1',
+    fetch(host + '/messages?channel=test channel1',
     {
       method: 'GET',
       headers: {
@@ -24,8 +27,8 @@ class Channel extends Component {
   }
 
   render () {
-    if(this.props.loginState.logged && this.props.messages.messages.length == 0)
-      this.getMessages();
+    if(!this.props.messages.channel) return <Redirect to='/main'/>
+
     return (
       <div>
         <MessageList messages={this.props.messages.messages}/>

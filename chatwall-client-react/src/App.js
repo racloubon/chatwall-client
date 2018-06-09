@@ -2,23 +2,33 @@ import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import mapDispatchToProps from './mapDispatchToProps';
 
 import Main from './containers/Main';
 import NoMatch from './components/NoMatch';
 import Test from './components/Test';
 import CreateChannelButton from './components/CreateChannelButton';
+import ExitChannelButton from './components/ExitChannelButton';
 import LogIn from './containers/LogIn';
 import Register from './containers/Register';
 import Channel from './containers/Channel';
+// import ChannelNav from './containers/ChannelNav';
+
+require('dotenv').config();
 
 class App extends Component {
+  onExitChannelClick = () => {
+    this.props.unSetMessages();
+  }
   render () {
     return (
       <Router>
         <div className="App">
           <div className="navbar">
             <div className="chatWallTitle">ChatWall</div>
-            <LogIn/>
+            <ExitChannelButton channel={this.props.messages.channel} onExitChannelClick={this.onExitChannelClick}/>
+            <LogIn />
+            {/* <ChannelNav/> */}
           </div>
           <div className="switchContainer">
             <Switch>
@@ -37,24 +47,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  loginState: state.login
+  loginState: state.login,
+  messages: state.messages
 });
-
-const mapDispatchToProps = (dispatch) => ({
-  startLogin: (logResult) => dispatch({
-    type: 'LOGIN_INIT',
-    logResult
-  }),
-  loginSuccessfull: (jwt_token, username) => dispatch({
-    type: 'LOGIN_SUCCESSFULL',
-    jwt_token,
-    username
-  }),
-  loginError: (error) => dispatch ({
-    type: 'LOGIN_ERROR',
-    error
-  })
-});
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

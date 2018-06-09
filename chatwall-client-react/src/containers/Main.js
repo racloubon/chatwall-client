@@ -1,7 +1,9 @@
 import React from 'react';
 import mapDispatchToProps from '../mapDispatchToProps';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
+import { Alert } from 'antd';
 import CreateChannelButton from '../components/CreateChannelButton';
 import GoToChatWall from '../components/GoToChatWall';
 import NotLoggedError from '../components/NotLoggedError';
@@ -24,13 +26,26 @@ class Main extends React.Component {
 
   readResponse = (response) => {
     if (response.errors) {
-      console.log('somthing went wrong, err', response.errors);
+      this.props.setMessagesError(response.errors);
     } else {
-      console.log(response);
+      this.props.setMessages(response.channel, response.messages)
+    }
+  }
+
+  renderError() {
+    if (this.props.messages.error) {
+      return (
+        <div className="errorMessageContainer">
+          <Alert message={this.props.messages.error} type="error" showIcon />
+        </div>
+      );
     }
   }
 
   render () {
+    if (this.props.messages.channel) return <Redirect to='/channel'/>
+    if (!this.props.loginState.logged) return <Redirect to='/'/>
+
     return (
       <div>
         <p>Welcome to the ChatWall website</p>
@@ -42,6 +57,7 @@ class Main extends React.Component {
             <GoToChatWall onGoClick={this.channelClick}/>
           </div>
         </div>
+        {this.renderError()}
         <NotLoggedError logged={this.props.loginState.logged}/>
       </div>
     );
@@ -49,7 +65,8 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  loginState: state.login
+  loginState: state.login,
+  messages: state.messages
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
