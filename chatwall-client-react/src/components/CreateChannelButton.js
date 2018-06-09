@@ -5,7 +5,7 @@ class CreateChannelButton extends React.Component {
   render () {
     return (
       <div className="createNewWallContainer">
-        <Button>Create Channel</Button>
+        <Button onClick={this.props.onCreateChannelClick}>Create Channel</Button>
       </div>
     );
   }

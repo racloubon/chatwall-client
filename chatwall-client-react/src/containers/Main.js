@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 
 import { Alert } from 'antd';
 import CreateChannelButton from '../components/CreateChannelButton';
+import ShowChannelButton from '../components/ShowChannelButton';
 import GoToChatWall from '../components/GoToChatWall';
 import NotLoggedError from '../components/NotLoggedError';
 import host from '../config/host';
@@ -32,6 +33,13 @@ class Main extends React.Component {
     }
   }
 
+  onCreateChannelHandler = () => {
+    console.log('go to create a new channel');
+  }
+  onShowChannelHandler = () => {
+    console.log('go to show a channel');
+  }
+
   renderError() {
     if (this.props.messages.error) {
       return (
@@ -51,7 +59,8 @@ class Main extends React.Component {
         <p>Welcome to the ChatWall website</p>
         <div className="introContainer">
           <div className="createChannelButtonContainer">
-            <CreateChannelButton />
+            <CreateChannelButton onCreateChannelClick={this.onCreateChannelHandler}/>
+            <ShowChannelButton onShowChannelClick={this.onShowChannelHandler}/>
           </div>
           <div  className="goToChatWallContainer">
             <GoToChatWall onGoClick={this.channelClick}/>

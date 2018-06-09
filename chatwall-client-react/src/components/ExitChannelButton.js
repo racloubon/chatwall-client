@@ -6,7 +6,7 @@ class ExitChannelButton extends React.Component {
     if (!this.props.channel) return null;
     return (
       <div onClick={this.props.onExitChannelClick} className="exitChannelButtonContainer">
-        <Button>Exit Channel</Button>
+        <Button>Exit {this.props.channel}</Button>
       </div>
     );
   }

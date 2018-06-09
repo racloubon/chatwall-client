@@ -6,6 +6,7 @@ import './MessageInput.css';
 const FormItem = Form.Item;
 
 class MessageInput extends React.Component {
+
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
