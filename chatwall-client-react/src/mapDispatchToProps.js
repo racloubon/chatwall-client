@@ -21,9 +21,6 @@ const mapDispatchToProps = (dispatch) => ({
   }),
   unSetMessages: () => dispatch({
     type: 'UNSET_MESSAGES'
-  }),
-  exitChannel: () => dispatch({
-    type: 'EXIT_CHANNEL'
   })
 });
 
