@@ -57,13 +57,15 @@ class Main extends React.Component {
     return (
       <div>
         <p>Welcome to the ChatWall website</p>
-        <div className="introContainer">
-          <div className="createChannelButtonContainer">
-            <CreateChannelButton onCreateChannelClick={this.onCreateChannelHandler}/>
-            <ShowChannelButton onShowChannelClick={this.onShowChannelHandler}/>
-          </div>
-          <div  className="goToChatWallContainer">
+        <div className="mainContainer">
+          <div className="mainItem">
             <GoToChatWall onGoClick={this.channelClick}/>
+          </div>
+          <div className="mainItem">
+            <CreateChannelButton onCreateChannelClick={this.onCreateChannelHandler}/>
+          </div>
+          <div className="mainItem">
+            <ShowChannelButton onShowChannelClick={this.onShowChannelHandler}/>
           </div>
         </div>
         {this.renderError()}

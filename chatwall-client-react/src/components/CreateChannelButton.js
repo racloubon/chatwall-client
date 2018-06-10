@@ -1,12 +1,16 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
+
+const Search = Input.Search;
 
 class CreateChannelButton extends React.Component {
   render () {
     return (
-      <div className="createNewWallContainer">
-        <Button onClick={this.props.onCreateChannelClick}>Create Channel</Button>
-      </div>
+      <Search
+        placeholder="Channel name"
+        enterButton="Create"
+        onSearch={value => this.props.onCreateChannelClick(value)}
+      />
     );
   }
 }

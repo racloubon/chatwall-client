@@ -1,13 +1,17 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Input} from 'antd';
 import './ShowChannelButton.css';
+
+const Search = Input.Search;
 
 class ShowChannelButton extends React.Component {
   render () {
     return (
-      <div className="showChannelButtonContainer">
-        <Button onClick={this.props.onShowChannelClick}>Show Channel</Button>
-      </div>
+      <Search
+        placeholder="Channel name"
+        enterButton="Show"
+        onSearch={value => this.props.onShowChannelClick(value)}
+      />
     );
   }
 }

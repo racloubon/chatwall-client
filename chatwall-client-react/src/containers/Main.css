@@ -1,7 +1,14 @@
-.introContainer {
+.mainContainer {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+.mainItem {
+  margin-top: 1em;
+  width: 100%;
+  max-width: 500px;
 }
 
 .createChannelButtonContainer {
