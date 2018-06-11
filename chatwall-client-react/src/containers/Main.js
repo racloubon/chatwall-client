@@ -12,7 +12,11 @@ import host from '../config/host';
 import './Main.css';
 
 class Main extends React.Component {
-  channelClick = (channel) => {
+  componentWillUnmount () {
+    this.props.resetMessagesInfo();
+  }
+
+  onGoToChannelHandler = (channel) => {
     fetch(host+'/messages?channel='+channel,
     {
       method: 'GET',
@@ -21,54 +25,102 @@ class Main extends React.Component {
       }
     })
     .then(res => res.json())
-    .then(this.readResponse)
+    .then(response => {
+      if (response.errors) {
+        this.props.goToChannelErr(response.errors[0]);
+      } else {
+        this.props.resetMessagesInfo();
+        this.props.setMessages(response.channel, response.messages, 'user')
+      }
+    })
     .catch(err => console.log('catched error from MainComp:',err))
   }
 
-  readResponse = (response) => {
-    if (response.errors) {
-      this.props.setMessagesError(response.errors);
-    } else {
-      this.props.setMessages(response.channel, response.messages)
-    }
+
+  onChannelCreateHandler = (channel) => {
+    console.log('create channel:',channel);
+    fetch(host+'/channels',
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + this.props.loginState.jwt_token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({channel})
+    })
+    .then(res => res.json())
+    .then(res =>{
+      if(res.errors) {
+        this.props.createChannelErr(res.errors[0]);
+      }
+      else {
+        this.props.createChannelInfo('channel ' + res.channel + ' created');
+      }
+    })
+    .catch(err => console.log('catched error from MainComp:',err))
   }
 
-  onCreateChannelHandler = () => {
-    console.log('go to create a new channel');
-  }
-  onShowChannelHandler = () => {
-    console.log('go to show a channel');
+  renderCreateChannelInfo = () => {
+    const info = this.props.infoMessages.createChannelInfo;
+    const err = this.props.infoMessages.createChannelErr;
+
+    if (!info&&!err) return null;
+    if (err) return <Alert className="marginTop" message={err} type="error" showIcon/>;
+    if(info) return <Alert className="marginTop" message={info} type="success" showIcon/>;
   }
 
-  renderError() {
-    if (this.props.messages.error) {
+  onChannelShowHandler = (channel) => {
+    console.log('show channel:',channel);
+    fetch(host+'/messages?channel='+channel,
+    {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + this.props.loginState.jwt_token
+      }
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.errors) {
+        this.props.showChannelErr(response.errors[0]);
+      } else {
+        this.props.resetMessagesInfo();
+        this.props.setMessages(response.channel, response.messages, 'show')
+      }
+    })
+    .catch(err => console.log('catched error from MainComp:',err))
+  }
+
+  renderGoToChannelError () {
+    if (this.props.infoMessages.goToChannelErr) {
       return (
         <div className="errorMessageContainer">
-          <Alert message={this.props.messages.error} type="error" showIcon />
+          <Alert message={this.props.infoMessages.goToChannelErr} type="error" showIcon />
         </div>
       );
     }
   }
 
   render () {
-    if (this.props.messages.channel) return <Redirect to='/channel'/>
     if (!this.props.loginState.logged) return <Redirect to='/'/>
+    if (this.props.messages.displayMode === 'user') return <Redirect to='/channel'/>
+    if (this.props.messages.displayMode === 'show') return <Redirect to='/showchannel'/>
 
     return (
       <div>
         <p>Welcome to the ChatWall website</p>
         <div className="mainContainer">
           <div className="mainItem">
-            <GoToChatWall onGoClick={this.channelClick}/>
+            <GoToChatWall onGoClick={this.onGoToChannelHandler}/>
+            {this.renderGoToChannelError()}
           </div>
           <div className="mainItem">
-            <CreateChannelButton onCreateChannelClick={this.onCreateChannelHandler}/>
+            <CreateChannelButton onChannelCreateClick={this.onChannelCreateHandler}/>
+            {this.renderCreateChannelInfo()}
           </div>
           <div className="mainItem">
-            <ShowChannelButton onShowChannelClick={this.onShowChannelHandler}/>
+            <ShowChannelButton onChannelShowClick={this.onChannelShowHandler}/>
           </div>
         </div>
-        {this.renderError()}
         <NotLoggedError logged={this.props.loginState.logged}/>
       </div>
     );
@@ -77,7 +129,8 @@ class Main extends React.Component {
 
 const mapStateToProps = (state) => ({
   loginState: state.login,
-  messages: state.messages
+  messages: state.messages,
+  infoMessages: state.infoMessages
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

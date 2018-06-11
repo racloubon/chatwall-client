@@ -8,7 +8,11 @@
 .mainItem {
   margin-top: 1em;
   width: 100%;
-  max-width: 500px;
+  max-width:500px
+}
+
+.marginTop {
+  margin-top: 1em !important;
 }
 
 .createChannelButtonContainer {

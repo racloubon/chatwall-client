@@ -6,13 +6,12 @@ import mapDispatchToProps from './mapDispatchToProps';
 
 import Main from './containers/Main';
 import NoMatch from './components/NoMatch';
-import Test from './components/Test';
 import CreateChannelButton from './components/CreateChannelButton';
 import ExitChannelButton from './components/ExitChannelButton';
 import LogIn from './containers/LogIn';
 import Register from './containers/Register';
 import Channel from './containers/Channel';
-// import ChannelNav from './containers/ChannelNav';
+import ShowChannel from './containers/ShowChannel';
 
 require('dotenv').config();
 
@@ -36,6 +35,7 @@ class App extends Component {
               <Route path='/main' component={Main}/>
               {/* <Route path='/main' render={props => <Intro logged={this.props.loginState.logged} {...props} />}/> */}
               <Route path='/channel' component={Channel}/>
+              <Route path='/showchannel' component={ShowChannel}/>
               <Route path='/createchannel' component={CreateChannelButton}/>
               <Route component={NoMatch}/>
             </Switch>

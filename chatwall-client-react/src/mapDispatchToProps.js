@@ -7,20 +7,40 @@ const mapDispatchToProps = (dispatch) => ({
     jwt_token,
     username
   }),
-  setMessages: (channel, messages) => dispatch({
+  setMessages: (channel, messages, displayMode) => dispatch({
     type: 'SET_MESSAGES',
     channel,
-    messages
-  }),
-  setMessagesError: (error) => dispatch({
-    type: 'SET_MESSAGES_ERROR',
-    error
-  }),
-  unSetMessagesError: () => dispatch({
-    type: 'UNSET_MESSAGES_ERROR'
+    messages,
+    displayMode
   }),
   unSetMessages: () => dispatch({
     type: 'UNSET_MESSAGES'
+  }),
+  setShowMessages: (channel, messages, displayMode) => dispatch ({
+    type: 'SET_SHOW_MESSAGES',
+    channel,
+    messages,
+    displayMode
+  }),
+  /////////// Errors and Info to show /////////////
+  goToChannelErr: (err) => dispatch ({
+    type: 'GO_TO_CHANNEL_ERR',
+    err
+  }),
+  createChannelErr: (err) => dispatch ({
+    type: 'CREATE_CHANNEL_ERR',
+    err
+  }),
+  createChannelInfo: (info) => dispatch ({
+    type: 'CREATE_CHANNEL_INFO',
+    info
+  }),
+  showChannelErr: (err) => dispatch ({
+    type: 'SHOW_CHANNEL_ERR',
+    err
+  }),
+  resetMessagesInfo: () => dispatch ({
+    type: 'RESET_MESSAGES_INFO'
   })
 });
 

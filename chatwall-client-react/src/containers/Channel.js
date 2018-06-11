@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import mapDispatchToProps from '../mapDispatchToProps';
 import { Redirect } from 'react-router';
 
 import NotLoggedError from '../components/NotLoggedError';
@@ -29,7 +30,7 @@ class Channel extends Component {
     .then(data => data.json())
     .then(res => {
       console.log(res);
-      this.props.setMessages(this.props.messages.channel, res.messages)
+      this.props.setMessages(this.props.messages.channel, res.messages, 'user')
     })
     .catch(err => console.log(err));
   }
@@ -65,7 +66,6 @@ class Channel extends Component {
 
   render () {
     if(!this.props.messages.channel) return <Redirect to='/main'/>
-    // this.getMessages();
 
     return (
       <div>
@@ -82,14 +82,6 @@ class Channel extends Component {
 const mapStateToProps = (state) => ({
   messages: state.messages,
   loginState: state.login
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setMessages: (channel, messages) => dispatch({
-    type: 'SET_MESSAGES',
-    channel,
-    messages
-  })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Channel);

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Form, Icon, Input, Button, message } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
@@ -15,7 +15,7 @@ class NormalLoginForm extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    
+
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
