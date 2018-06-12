@@ -1,3 +1,7 @@
+.welcomeTitle {
+  color: white;
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;
@@ -25,4 +29,11 @@
 
 .errorMessageContainer {
   margin-top: 1em;
+}
+
+.instructionsContainer {
+  margin-top: 2em;
+}
+.instructionsContainer h3 {
+  color: white;
 }

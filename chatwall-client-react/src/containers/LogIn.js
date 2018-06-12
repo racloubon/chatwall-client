@@ -30,7 +30,11 @@ class LogIn extends Component {
       }
     })
     .catch(err => {
-      this.props.loginError(err.toString())
+      if(err.toString().includes('SyntaxError:'))
+        this.props.loginError('Bad user/password');
+      else
+        this.props.loginError(err.toString());
+      // this.props.loginError('Somthing went wrong')
     });
   }
 
@@ -39,7 +43,8 @@ class LogIn extends Component {
     this.props.unSetMessages();
   }
 
-  renderLoginState = () => {
+  render () {
+    console.log(this.props);
     if (!this.props.loginState.logged) {
       return (
         <div>
@@ -54,12 +59,6 @@ class LogIn extends Component {
         </div>
       );
     }
-  }
-
-  render () {
-    return (
-      this.renderLoginState()
-    );
   }
 }
 

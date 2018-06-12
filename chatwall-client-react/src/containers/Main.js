@@ -117,7 +117,7 @@ class Main extends React.Component {
 
     return (
       <div>
-        <p>Welcome to the ChatWall website</p>
+        <h2 className="welcomeTitle">Welcome to the ChatWall website</h2>
         <div className="mainContainer">
           <div className="mainItem">
             <GoToChatWall onGoClick={this.onGoToChannelHandler}/>
@@ -133,6 +133,13 @@ class Main extends React.Component {
           </div>
         </div>
         <NotLoggedError logged={this.props.loginState.logged}/>
+        <div className="instructionsContainer">
+
+          <h3>Instructions</h3>
+          <p>Anyone can create a channel! :)</p>
+          <p>Anyone can post messages on it (Go) . They will apear on it for 15"</p>
+          <p>To visualize the channel messages in a big screen use Show</p>
+        </div>
       </div>
     );
   }
