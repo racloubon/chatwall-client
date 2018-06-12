@@ -2,10 +2,10 @@ import React from 'react';
 import mapDispatchToProps from '../mapDispatchToProps';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { Row, Col, Slider } from 'antd';
 import host from '../config/host';
-import MessageItemFlip from '../components/MessageItemFlip';
 
+import MessageGrid from '../components/MessageGrid';
+import GridSliders from '../components/GridSliders';
 import './ShowChannel.css';
 
 let refreshIntervalId;
@@ -31,7 +31,9 @@ class Grid extends React.Component {
     })
     .then(data => data.json())
     .then(res => {
-      this.props.setShowMessages(this.props.messages.channel, res.messages, 'show')
+      console.log('inside ShowChannel getShowMessages, res:',res);
+      this.props.setShowMessages(this.props.messages.channel, res.messages, 'show',
+      this.rowCounts[this.props.rowCountKey] ,this.colCounts[this.props.colCountKey])
     })
     .catch(err => console.log(err));
   }
@@ -39,20 +41,26 @@ class Grid extends React.Component {
   colCounts = {};
   rowCounts = {};
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       colCountKey: 2,
       rowCountKey: 2
     };
     [2, 3, 4, 6, 8, 12].forEach((value, i) => { this.colCounts[i] = value; });
     [2, 3, 4, 5, 6, 7, 8].forEach((value, i) => { this.rowCounts[i] = value; });
+    console.log('inside ShowChannel constructor, this.props:',this.props);
+    this.props.setCol(this.colCounts[this.state.colCountKey]);
+    this.props.setRow(this.rowCounts[this.state.rowCountKey]);
   }
-  onColCountChange = (colCountKey) => {
+  onColCountChangeHandler = (colCountKey) => {
     this.setState({ colCountKey });
+    this.props.setCol(this.colCounts[colCountKey])
+
   }
-  onRowCountChange = (rowCountKey) => {
+  onRowCountChangeHandler = (rowCountKey) => {
     this.setState({ rowCountKey });
+    this.props.setRow(this.rowCounts[rowCountKey])
   }
   render() {
     if(!this.props.messages.channel) return <Redirect to='/main'/>
@@ -60,58 +68,18 @@ class Grid extends React.Component {
     if(!this.props.messages) return null;
 
     const { colCountKey, rowCountKey } = this.state;
-    const rows = [];
-    const colCount = this.colCounts[colCountKey];
-    const rowCount = this.rowCounts[rowCountKey];
-    for (let i =0; i < rowCount; i++){
-      rows.push([]);
-      for (let j = 0; j < colCount; j++) {
-        let message;
-        if (this.props.messages.showMessages[i*colCount+j])
-          message = this.props.messages.showMessages[i*colCount+j];
-        if (message && message.hasOwnProperty('id')) {
-          rows[i].push(
-            <Col key={i.toString() +'-'+ j.toString()} span={24 / colCount}>
-              <MessageItemFlip creator={message.creator} message={message.message} rotate={true}/>
-            </Col>
-          );
-        } else {
-          rows[i].push(
-            <Col key={i.toString() +'-'+ j.toString()} span={24 / colCount}>
-              <MessageItemFlip creator="" message="" rotate={false}/>
-            </Col>
-          );
-        }
-      }
-    }
 
     return (
       <div>
-        {rows.map((row, i) => <Row key={i} gutter="8">{row}</Row>)}
-        <div className="sliderControls">
-          <div style={{ flex: 1, marginRight: 16 }}>
-            <span>Rows</span>
-            <Slider
-              min={0}
-              max={Object.keys(this.rowCounts).length - 1}
-              value={rowCountKey}
-              onChange={this.onRowCountChange}
-              marks={this.rowCounts}
-              step={null}
-            />
-          </div>
-            <div style={{ flex: 1, marginLeft: 16 }}>
-              <span>Columns</span>
-              <Slider
-                min={0}
-                max={Object.keys(this.colCounts).length - 1}
-                value={colCountKey}
-                onChange={this.onColCountChange}
-                marks={this.colCounts}
-                step={null}
-              />
-            </div>
-        </div>
+        <MessageGrid  colCount={this.colCounts[colCountKey]}
+                      rowCount = {this.rowCounts[rowCountKey]}
+                      showMessages = {this.props.messages.showMessages}/>
+        <GridSliders onRowCountChange={this.onRowCountChangeHandler}
+                      rowCounts = {this.rowCounts}
+                      rowCountKey = {rowCountKey}
+                      onColumnCountChange={this.onColCountChangeHandler}
+                      colCounts = {this.colCounts}
+                      colCountKey = {colCountKey}/>
       </div>
     );
   }
@@ -119,7 +87,8 @@ class Grid extends React.Component {
 
 const mapStateToProps = (state) => ({
   loginState: state.login,
-  messages: state.messages
+  messages: state.messages,
+  gridStatus: state.gridStatus
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Grid);

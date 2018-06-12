@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
 
+///////////////////////////////////////////////////////////////////////////////
+// login
+///////////////////////////////////////////////////////////////////////////////
+
 const loginInitialState = {
   logged: false,
   jwt_token: undefined,
@@ -31,6 +35,9 @@ const login = (state = loginInitialState, action) => {
   return state;
 };
 
+///////////////////////////////////////////////////////////////////////////////
+// messages
+///////////////////////////////////////////////////////////////////////////////
 
 const messagesInitialState = {
   messages: [],
@@ -54,6 +61,7 @@ const messages = (state = messagesInitialState, action) => {
       ...messagesInitialState
     });
   case 'SET_SHOW_MESSAGES':
+    console.log('inside reducer, messages:', action.messages);
     return ({
       ...state,
       showMessages: keepMessagesOrder(state.showMessages, action.messages)
@@ -63,6 +71,7 @@ const messages = (state = messagesInitialState, action) => {
 };
 
 const keepMessagesOrder = (initialMessages, newMessages) => {
+  console.log('initialMessages:',initialMessages,' || newMessages:', newMessages);
   // check if the intital messages are present in the newMessages, if not fill with {}
   const emptySlots = [];
   const finalMessages = initialMessages.map((initialMessage, index) => {
@@ -81,13 +90,17 @@ const keepMessagesOrder = (initialMessages, newMessages) => {
     if (!findResult) {
       newMessage.alreadyRendered = false;
       const emptySlot = emptySlots.shift();
-      if (emptySlot !== undefined) finalMessages[emptySlot] = newMessage;
+      if (emptySlot != undefined) finalMessages[emptySlot] = newMessage;
       else finalMessages.push(newMessage);
     }
   });
 
   return finalMessages;
 };
+
+///////////////////////////////////////////////////////////////////////////////
+// infoMessages
+///////////////////////////////////////////////////////////////////////////////
 
 const infoMessagesInitialState = {
   goToChannelErr: false,
@@ -131,12 +144,38 @@ const infoMessages = (state = infoMessagesInitialState, action) => {
   return state;
 };
 
+///////////////////////////////////////////////////////////////////////////////
+// gridStatus
+///////////////////////////////////////////////////////////////////////////////
+
+const gridStatusInitialState = {
+  row: null,
+  col: null
+};
+
+const gridStatus = (state = gridStatusInitialState, action) => {
+  switch (action.type) {
+  case 'SET_ROW':
+    return ({
+      ...state,
+      row: action.row
+    });
+  case 'SET_COL':
+    return ({
+      ...state,
+      col: action.col
+    });
+  }
+  return state;
+};
+
 // Combining reducers
 
 const reducers = combineReducers({
   login,
   messages,
-  infoMessages
+  infoMessages,
+  gridStatus
 });
 
 export default reducers;

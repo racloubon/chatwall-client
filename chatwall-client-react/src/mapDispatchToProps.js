@@ -11,6 +11,7 @@ const mapDispatchToProps = (dispatch) => ({
     type: 'LOGIN_ERROR',
     error
   }),
+  // messages reducer /////////////////////////////////////////////////////////
   setMessages: (channel, messages, displayMode) => dispatch({
     type: 'SET_MESSAGES',
     channel,
@@ -26,7 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
     messages,
     displayMode
   }),
-  /////////// Errors and Info to show /////////////
+  // Errors and Info to show //////////////////////////////////////////////////
   goToChannelErr: (err) => dispatch ({
     type: 'GO_TO_CHANNEL_ERR',
     err
@@ -45,7 +46,16 @@ const mapDispatchToProps = (dispatch) => ({
   }),
   resetMessagesInfo: () => dispatch ({
     type: 'RESET_MESSAGES_INFO'
-  })
+  }),
+  // gridStatus ///////////////////////////////////////////////////////////////
+  setRow: (row) => dispatch ({
+    type: 'SET_ROW',
+    row
+  }),
+  setCol: (col) => dispatch ({
+    type: 'SET_COL',
+    col
+  }),
 });
 
 export default mapDispatchToProps;

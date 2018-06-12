@@ -1,0 +1,5 @@
+.sliderControls {
+  display: flex;
+  margin-top: 1em;
+  flex-direction: row;
+}
