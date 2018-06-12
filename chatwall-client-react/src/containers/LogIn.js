@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { Redirect } from 'react-router';
 import LoginForm from '../components/LoginForm';
 import Username from  '../components/Username';
-import RenderError from '../components/RenderError';
 import btoa from 'btoa';
 import mapDispatchToProps from '../mapDispatchToProps';
-import { Redirect } from 'react-router';
 import host from '../config/host';
 
 class LogIn extends Component {

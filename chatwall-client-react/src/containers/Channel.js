@@ -7,6 +7,7 @@ import NotLoggedError from '../components/NotLoggedError';
 import MessageList from '../components/MessageList';
 import MessageInput from '../components/MessageInput';
 import host from '../config/host';
+import './Channel.css';
 
 let refreshIntervalId;
 
@@ -29,19 +30,16 @@ class Channel extends Component {
     })
     .then(data => data.json())
     .then(res => {
-      console.log(res);
       this.props.setMessages(this.props.messages.channel, res.messages, 'user')
     })
     .catch(err => console.log(err));
   }
 
   sendMessage = (message) => {
-    console.log(message);
     const toSend = {
       message,
       channel: this.props.messages.channel
     }
-    console.log(toSend);
     fetch(host+'/messages',
     {
       method: 'POST',
@@ -53,11 +51,11 @@ class Channel extends Component {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res);
       if(res.errors) {
-        console.log('somthing went wrong:',res.errors);
+        // console.log('somthing went wrong:',res.errors);
+
       } else {
-        console.log('response recived from the backend',res);
+        // console.log('response recived from the backend',res);
         this.getMessages();
       }
     })
@@ -66,9 +64,9 @@ class Channel extends Component {
 
   render () {
     if(!this.props.messages.channel) return <Redirect to='/main'/>
-
+    
     return (
-      <div>
+      <div className="messageListContainer">
         <MessageList messages={this.props.messages.messages}/>
         <br/>
         <MessageInput onMessageSubmit={this.sendMessage}/>

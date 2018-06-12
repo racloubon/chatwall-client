@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Row, Col, Slider } from 'antd';
 import host from '../config/host';
-import MessageItem from '../components/MessageItem';
-import NoMessageItem from '../components/NoMessageItem';
+import MessageItemFlip from '../components/MessageItemFlip';
 
 import './ShowChannel.css';
 
@@ -73,13 +72,13 @@ class Grid extends React.Component {
         if (message && message.hasOwnProperty('id')) {
           rows[i].push(
             <Col key={i.toString() +'-'+ j.toString()} span={24 / colCount}>
-              <MessageItem creator={message.creator} message={message.message}/>
+              <MessageItemFlip creator={message.creator} message={message.message} rotate={true}/>
             </Col>
           );
         } else {
           rows[i].push(
             <Col key={i.toString() +'-'+ j.toString()} span={24 / colCount}>
-              <NoMessageItem />
+              <MessageItemFlip creator="" message="" rotate={false}/>
             </Col>
           );
         }

@@ -3,7 +3,6 @@ import { Card } from 'antd';
 
 class MessageList extends React.Component {
   render () {
-    console.log('inside MessageList render, this.props', this.props);
     return (
       this.props.messages.map(message => {
         return (

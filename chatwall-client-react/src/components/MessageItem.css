@@ -27,10 +27,10 @@ h6 {
 
 
 
-.flip-vertical-right {
+/* .flip-vertical-right {
 	-webkit-animation: flip-vertical-right 2.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) backwards;
 	        animation: flip-vertical-right 2.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) backwards;
-}
+} */
 
 @-webkit-keyframes flip-vertical-right {
   0% {

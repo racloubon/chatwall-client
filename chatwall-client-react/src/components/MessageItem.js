@@ -5,9 +5,7 @@ const MessageItem = ({creator, message}) => {
   return (
     <div className='messageItem flip-vertical-right'>
       <h6>{creator}</h6>
-      <div className='textMessage'>
-        <div>{message}</div>
-      </div>
+      <div className='textMessage'>{message}</div>
     </div>
   );
 };

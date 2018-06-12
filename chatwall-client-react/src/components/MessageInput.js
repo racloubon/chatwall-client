@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Form, Input, Button } from 'antd';
 import './MessageInput.css';
 
 const FormItem = Form.Item;
 
 class MessageInput extends React.Component {
-
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
@@ -38,7 +36,5 @@ class MessageInput extends React.Component {
 }
 
 const WrappedMessageInput = Form.create()(MessageInput);
-
-ReactDOM.render(<WrappedMessageInput />, document.getElementById('root'));
 
 export default WrappedMessageInput;
