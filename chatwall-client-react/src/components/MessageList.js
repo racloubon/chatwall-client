@@ -8,7 +8,7 @@ class MessageList extends React.Component {
       this.props.messages.map(message => {
         return (
           <div key={message.id}>
-            <Card type="inner" title={message.creator} extra={<a href="#">Like</a>}>
+            <Card type="inner" title={message.creator}>
               {message.message}
             </Card>
             <br/>

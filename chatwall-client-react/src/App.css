@@ -3,6 +3,15 @@
   color: white;
 }
 
+.chatWallLogoContainer {
+  height: 3em;
+}
+
+.chatWallLogo {
+  height: 100%;
+  width: auto;
+}
+
 .navbar {
   display: flex;
   justify-content: space-around;

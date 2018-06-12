@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import LoginForm from '../components/LoginForm';
 import Username from  '../components/Username';
+import RenderError from '../components/RenderError';
 import btoa from 'btoa';
 import mapDispatchToProps from '../mapDispatchToProps';
 import { Redirect } from 'react-router';
@@ -26,7 +27,12 @@ class LogIn extends Component {
     .then(res => {
       if(res.jwt_token) {
         this.props.loginSuccessfull(res.jwt_token, res.username)
+      } else {
+        this.props.loginError(res.errors[0])
       }
+    })
+    .catch(err => {
+      this.props.loginError(err.toString())
     });
   }
 

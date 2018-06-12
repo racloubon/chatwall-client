@@ -1,0 +1,34 @@
+.noMessageItem {
+  display: flex;
+  background-color: lightgray;
+	opacity: 0.2;
+  border-radius: 5px;
+  margin-top: 8px;
+  height: 6em;
+}
+
+.flip-vertical-left {
+	-webkit-animation: flip-vertical-left 2.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) backwards;
+	        animation: flip-vertical-left 2.5s cubic-bezier(0.455, 0.030, 0.515, 0.955) backwards;
+}
+
+@-webkit-keyframes flip-vertical-left {
+  0% {
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+  }
+  100% {
+    -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+  }
+}
+@keyframes flip-vertical-left {
+  0% {
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+  }
+  100% {
+    -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+  }
+}

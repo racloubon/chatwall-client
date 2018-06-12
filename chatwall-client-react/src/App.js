@@ -12,6 +12,7 @@ import LogIn from './containers/LogIn';
 import Register from './containers/Register';
 import Channel from './containers/Channel';
 import ShowChannel from './containers/ShowChannel';
+import logo from './assets/logo.gif';
 
 require('dotenv').config();
 
@@ -24,8 +25,12 @@ class App extends Component {
       <Router>
         <div className="App">
           <div className="navbar">
-            <div className="chatWallTitle">ChatWall</div>
-            <ExitChannelButton channel={this.props.messages.channel} onExitChannelClick={this.onExitChannelClick}/>
+            <div className="chatWallLogoContainer">
+              <img src={logo} alt="ChatWall" className="chatWallLogo"></img>
+            </div>
+            <ExitChannelButton channel={this.props.messages.channel}
+              displayMode={this.props.messages.displayMode}
+              onExitChannelClick={this.onExitChannelClick}/>
             <LogIn />
             {/* <ChannelNav/> */}
           </div>

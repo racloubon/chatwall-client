@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Row, Col, Slider } from 'antd';
 import host from '../config/host';
+import MessageItem from '../components/MessageItem';
+import NoMessageItem from '../components/NoMessageItem';
 
 import './ShowChannel.css';
 
@@ -45,7 +47,7 @@ class Grid extends React.Component {
       rowCountKey: 2
     };
     [2, 3, 4, 6, 8, 12].forEach((value, i) => { this.colCounts[i] = value; });
-    [2, 3, 4, 6, 8, 12].forEach((value, i) => { this.rowCounts[i] = value; });
+    [2, 3, 4, 5, 6, 7, 8].forEach((value, i) => { this.rowCounts[i] = value; });
   }
   onColCountChange = (colCountKey) => {
     this.setState({ colCountKey });
@@ -68,20 +70,16 @@ class Grid extends React.Component {
         let message;
         if (this.props.messages.showMessages[i*colCount+j])
           message = this.props.messages.showMessages[i*colCount+j];
-        if (message && message.alreadyRendered) {
+        if (message && message.hasOwnProperty('id')) {
           rows[i].push(
             <Col key={i.toString() +'-'+ j.toString()} span={24 / colCount}>
-              <div className='messageItem'>
-                {message ? message.message : ''}
-              </div>
+              <MessageItem creator={message.creator} message={message.message}/>
             </Col>
           );
         } else {
           rows[i].push(
             <Col key={i.toString() +'-'+ j.toString()} span={24 / colCount}>
-              <div className='messageItem flip-vertical-left'>
-                {message ? message.message : ''}
-              </div>
+              <NoMessageItem />
             </Col>
           );
         }

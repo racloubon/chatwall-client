@@ -37,11 +37,12 @@ class Register extends Component {
     if(this.props.loginState.logged) return <Redirect to='/main'/>
 
     return (
-      <div >
-        <h2 className="registerTitle">Register now!</h2>
-        <RegisterForm registerSubmit={this.checkRegisterValues} errors={this.props.loginState.errors}/>
-        {this.renderError()}
-      </div>
+        <div className="registerContainer">
+          <h2 className="registerTitle">Register now!</h2>
+          <div className="testdiv">          <RegisterForm registerSubmit={this.checkRegisterValues} errors={this.props.loginState.errors}/>
+</div>
+          {this.renderError()}
+        </div>
     );
   }
 }

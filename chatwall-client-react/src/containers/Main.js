@@ -100,6 +100,16 @@ class Main extends React.Component {
     }
   }
 
+  renderShowChannelError () {
+    if (this.props.infoMessages.showChannelErr) {
+      return (
+        <div className="errorMessageContainer">
+          <Alert message={this.props.infoMessages.showChannelErr} type="error" showIcon />
+        </div>
+      );
+    }
+  }
+
   render () {
     if (!this.props.loginState.logged) return <Redirect to='/'/>
     if (this.props.messages.displayMode === 'user') return <Redirect to='/channel'/>
@@ -119,6 +129,7 @@ class Main extends React.Component {
           </div>
           <div className="mainItem">
             <ShowChannelButton onChannelShowClick={this.onChannelShowHandler}/>
+            {this.renderShowChannelError()}
           </div>
         </div>
         <NotLoggedError logged={this.props.loginState.logged}/>

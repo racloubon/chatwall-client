@@ -81,7 +81,7 @@ const keepMessagesOrder = (initialMessages, newMessages) => {
     if (!findResult) {
       newMessage.alreadyRendered = false;
       const emptySlot = emptySlots.shift();
-      if (emptySlot) finalMessages[emptySlot] = newMessage;
+      if (emptySlot != undefined) finalMessages[emptySlot] = newMessage;
       else finalMessages.push(newMessage);
     }
   });

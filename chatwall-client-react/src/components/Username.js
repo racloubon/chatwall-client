@@ -8,7 +8,7 @@ class Username extends React.Component {
       <div>
         <ButtonGroup>
           <Button>Hello {this.props.username}</Button>
-          <Button onClick={this.props.logOutClick}>LogOut</Button>
+          <Button type="primary" onClick={this.props.logOutClick}>LogOut</Button>
         </ButtonGroup>
       </div>
     );

@@ -7,6 +7,10 @@ const mapDispatchToProps = (dispatch) => ({
     jwt_token,
     username
   }),
+  loginError: (error) => dispatch({
+    type: 'LOGIN_ERROR',
+    error
+  }),
   setMessages: (channel, messages, displayMode) => dispatch({
     type: 'SET_MESSAGES',
     channel,
