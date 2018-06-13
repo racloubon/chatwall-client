@@ -42,6 +42,7 @@ const login = (state = loginInitialState, action) => {
 const messagesInitialState = {
   messages: [],
   showMessages: [],
+  gridSize: null,
   channel: null,
   displayMode: null
 };
@@ -61,17 +62,44 @@ const messages = (state = messagesInitialState, action) => {
       ...messagesInitialState
     });
   case 'SET_SHOW_MESSAGES':
-    console.log('inside reducer, messages:', action.messages);
     return ({
       ...state,
-      showMessages: keepMessagesOrder(state.showMessages, action.messages)
+      showMessages: keepMessagesOrder(state.showMessages, action.messages,
+                                      state.gridSize, action.newGridSize),
+      gridSize: action.newGridSize
     });
   }
   return state;
 };
 
 const keepMessagesOrder = (initialMessages, newMessages) => {
-  console.log('initialMessages:',initialMessages,' || newMessages:', newMessages);
+  // check if the intital messages are present in the newMessages, if not fill with {}
+  const emptySlots = [];
+  const finalMessages = initialMessages.map((initialMessage, index) => {
+    const messageFound = newMessages.find(newMessage => newMessage.id === initialMessage.id);
+    if (messageFound) {
+      messageFound.alreadyRendered = true;
+      return messageFound;
+    }
+    emptySlots.push(index);
+    return {};
+  });
+
+  // check if all the new messages are in the final array messages
+  newMessages.forEach(newMessage => {
+    const findResult = finalMessages.find(finalMessage => finalMessage.id === newMessage.id);
+    if (!findResult) {
+      newMessage.alreadyRendered = false;
+      const emptySlot = emptySlots.shift();
+      if (emptySlot != undefined) finalMessages[emptySlot] = newMessage;
+      else finalMessages.push(newMessage);
+    }
+  });
+
+  return finalMessages;
+};
+
+const randomMessagesOrder = (initialMessages, newMessages, previousGridSize, newGridSize) => {
   // check if the intital messages are present in the newMessages, if not fill with {}
   const emptySlots = [];
   const finalMessages = initialMessages.map((initialMessage, index) => {

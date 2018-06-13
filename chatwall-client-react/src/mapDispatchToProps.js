@@ -21,11 +21,12 @@ const mapDispatchToProps = (dispatch) => ({
   unSetMessages: () => dispatch({
     type: 'UNSET_MESSAGES'
   }),
-  setShowMessages: (channel, messages, displayMode) => dispatch ({
+  setShowMessages: (channel, messages, displayMode, newGridSize) => dispatch ({
     type: 'SET_SHOW_MESSAGES',
     channel,
     messages,
-    displayMode
+    displayMode,
+    newGridSize
   }),
   // Errors and Info to show //////////////////////////////////////////////////
   goToChannelErr: (err) => dispatch ({

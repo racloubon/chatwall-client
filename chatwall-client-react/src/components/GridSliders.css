@@ -2,4 +2,10 @@
   display: flex;
   margin-top: 1em;
   flex-direction: row;
+  position: fixed;
+  bottom: 0;
+  left:0;
+  width: 100%;
+  padding: 0 1em;
+  background-color: rgb(45, 48, 55);
 }

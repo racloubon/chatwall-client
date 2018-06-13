@@ -32,8 +32,8 @@ class Grid extends React.Component {
     .then(data => data.json())
     .then(res => {
       console.log('inside ShowChannel getShowMessages, res:',res);
-      this.props.setShowMessages(this.props.messages.channel, res.messages, 'show',
-      this.rowCounts[this.props.rowCountKey] ,this.colCounts[this.props.colCountKey])
+      this.props.setShowMessages(this.props.messages.channel, res.messages, 'show')
+      //, this.rowCounts[this.props.rowCountKey]*this.colCounts[this.props.colCountKey])
     })
     .catch(err => console.log(err));
   }
@@ -70,7 +70,7 @@ class Grid extends React.Component {
     const { colCountKey, rowCountKey } = this.state;
 
     return (
-      <div>
+      <div className="showChannelContainer">
         <MessageGrid  colCount={this.colCounts[colCountKey]}
                       rowCount = {this.rowCounts[rowCountKey]}
                       showMessages = {this.props.messages.showMessages}/>
@@ -79,7 +79,8 @@ class Grid extends React.Component {
                       rowCountKey = {rowCountKey}
                       onColumnCountChange={this.onColCountChangeHandler}
                       colCounts = {this.colCounts}
-                      colCountKey = {colCountKey}/>
+                      colCountKey = {colCountKey}
+                      className="gridSliders"/>
       </div>
     );
   }
