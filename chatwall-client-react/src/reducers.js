@@ -207,3 +207,12 @@ const reducers = combineReducers({
 });
 
 export default reducers;
+
+// Just an idea/example of a redux structure
+//
+// const Redux = {
+//   authentication:
+//   error:
+//   entities: {messages, channels},
+//   pages: {UI}.showChannel : {rows, columns}
+// }

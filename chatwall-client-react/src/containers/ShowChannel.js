@@ -48,7 +48,7 @@ class Grid extends React.Component {
       rowCountKey: 2
     };
     [2, 3, 4, 6, 8, 12].forEach((value, i) => { this.colCounts[i] = value; });
-    [2, 3, 4, 5, 6, 7, 8].forEach((value, i) => { this.rowCounts[i] = value; });
+    [2, 3, 4, 5, 6, 7, 8, 9, 10].forEach((value, i) => { this.rowCounts[i] = value; });
     console.log('inside ShowChannel constructor, this.props:',this.props);
     this.props.setCol(this.colCounts[this.state.colCountKey]);
     this.props.setRow(this.rowCounts[this.state.rowCountKey]);

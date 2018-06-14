@@ -7,6 +7,7 @@ class ExitChannelButton extends React.Component {
   render () {
     if (!this.props.channel) return null;
 
+    // displayMode => 'user'
     if (this.props.displayMode === 'user') {
       return (
         <div onClick={this.props.onExitChannelClick} className="exitChannelButtonContainer">
