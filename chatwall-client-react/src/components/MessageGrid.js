@@ -4,7 +4,6 @@ import MessageItemFlip from './MessageItemFlip';
 
 class MessageGrid extends React.Component {
   render () {
-    console.log(this.props);
     if (!this.props.showMessages) return null;
 
     const rows = [];

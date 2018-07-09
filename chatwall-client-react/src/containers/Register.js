@@ -39,8 +39,9 @@ class Register extends Component {
     return (
         <div className="registerContainer">
           <h2 className="registerTitle">Register now!</h2>
-          <div className="testdiv">          <RegisterForm registerSubmit={this.checkRegisterValues} errors={this.props.loginState.errors}/>
-</div>
+          <div className="testdiv">
+            <RegisterForm registerSubmit={this.checkRegisterValues} errors={this.props.loginState.errors}/>
+          </div>
           {this.renderError()}
         </div>
     );

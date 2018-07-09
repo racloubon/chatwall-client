@@ -14,8 +14,6 @@ import Channel from './containers/Channel';
 import ShowChannel from './containers/ShowChannel';
 import logo from './assets/logo.gif';
 
-require('dotenv').config();
-
 class App extends Component {
   onExitChannelClick = () => {
     this.props.unSetMessages();

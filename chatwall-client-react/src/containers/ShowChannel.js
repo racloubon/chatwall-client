@@ -6,7 +6,6 @@ import host from '../config/host';
 
 import MessageGrid from '../components/MessageGrid';
 import GridSliders from '../components/GridSliders';
-import './ShowChannel.css';
 
 let refreshIntervalId;
 

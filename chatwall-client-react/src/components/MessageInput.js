@@ -10,7 +10,6 @@ class MessageInput extends React.Component {
     console.log(e);
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values);
         this.props.onMessageSubmit(values.message);
         this.props.form.setFields({message:''})
       }
