@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import mapDispatchToProps from './mapDispatchToProps';
+import { Redirect } from 'react-router';
 
 import Main from './containers/Main';
 import NoMatch from './components/NoMatch';
@@ -15,9 +16,25 @@ import ShowChannel from './containers/ShowChannel';
 import logo from './assets/logo.gif';
 
 class App extends Component {
-  onExitChannelClick = () => {
-    this.props.unSetMessages();
+
+  constructor(props) {
+    super(props),
+    this.state = {
+      exitChannel: false,
+      inChannel: true,
+      pin: null,
+      toChannel: null
+    }
   }
+
+  onExitChannelClick = () => {
+    this.setState({exitChannel: true})
+  }
+
+  goToChannel = (pin) => {
+    this.setState({pin: pin, toChannel: true});
+  }
+
   render () {
     return (
       <Router>
@@ -26,21 +43,17 @@ class App extends Component {
             <div className="chatWallLogoContainer">
               <img src={logo} alt="ChatWall" className="chatWallLogo"></img>
             </div>
-            <ExitChannelButton channel={this.props.messages.channel}
-              displayMode={this.props.messages.displayMode}
-              onExitChannelClick={this.onExitChannelClick}/>
             <LogIn />
-            {/* <ChannelNav/> */}
           </div>
+
           <div className="switchContainer">
             <Switch>
               <Route exact path='/' component={Register}/>
-              <Route path='/main' component={Main}/>
-              {/* <Route path='/main' render={props => <Intro logged={this.props.loginState.logged} {...props} />}/> */}
-              <Route path='/channel' component={Channel}/>
-              <Route path='/showchannel' component={ShowChannel}/>
+              <Route path='/main' render={(props) => <Main {...props} goToChannel={this.goToChannel}/>} />
+              <Route path='/channel' component={Channel} />
+              //<Route path='/showchannel' component={ShowChannel}/>
               <Route path='/createchannel' component={CreateChannelButton}/>
-              <Route component={NoMatch}/>
+              //<Route component={NoMatch}/>
             </Switch>
           </div>
         </div>
@@ -51,7 +64,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => ({
   loginState: state.login,
-  messages: state.messages
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

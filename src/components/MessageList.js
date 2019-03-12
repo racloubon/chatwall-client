@@ -1,21 +1,23 @@
 import React from 'react';
 import { Card } from 'antd';
 
-class MessageList extends React.Component {
-  render () {
-    return (
-      this.props.messages.map(message => {
-        return (
-          <div key={message.id}>
-            <Card type="inner" title={message.creator}>
-              {message.message}
-            </Card>
+const MessageList = ({messages, vote}) => {
+  return (
+    messages.map(message => {
+      return (
+        <div key={message.id}>
+          <Card type="inner" title={message.creator}>
+            <h2>{message.score}</h2>
+            {message.message}
             <br/>
-          </div>
-        );
-      })
-    );
-  }
+            <button onClick={() => vote(1, message.id)}>+</button>
+            <button onClick={() => vote(0, message.id)}>-</button>
+          </Card>
+          <br/>
+        </div>
+      );
+    })
+  );
 }
 
 export default MessageList;

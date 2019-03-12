@@ -2,16 +2,12 @@ import React from 'react';
 import { Input } from 'antd';
 const Search = Input.Search;
 
-class GoToChatWall extends React.Component {
-  render () {
-    return (
-      <Search
-        placeholder="Channel name"
-        enterButton="Go"
-        onSearch={value => this.props.onGoClick(value)}
-      />
-    );
-  }
+const input = ({placeholder, enterButton, onSearch}) => {
+  return <Search
+    placeholder={placeholder}
+    enterButton={enterButton}
+    onSearch={value => onSearch(value)}
+  />
 }
 
-export default GoToChatWall;
+export default input;

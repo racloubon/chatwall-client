@@ -1,5 +1,15 @@
+.componentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 50px;
+  align-self: center;
+}
+
 .welcomeTitle {
   color: white;
+  font-family: Helvetica;
 }
 
 .mainContainer {
@@ -7,6 +17,11 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+}
+
+.instruction {
+  color: white;
+  margin-top: 50px;
 }
 
 .mainItem {
