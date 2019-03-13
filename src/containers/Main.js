@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
 import { Alert } from 'antd';
-import Input from '../components/GoToChatWall';
-import ChannelCreated from '../components/ChannelCreated';
-import CreateChannelButton from '../components/CreateChannelButton';
-import ShowChannelButton from '../components/ShowChannelButton';
-import GoToChatWall from '../components/GoToChatWall';
+import Input from '../components/InputForm';
+//import ShowChannelButton from '../components/ShowChannelButton';
 import NotLoggedError from '../components/NotLoggedError';
 import host from '../config/host';
 import './Main.css';
@@ -19,25 +16,15 @@ class Main extends React.Component {
     super(props);
     this.state = {
       channel: {},
-      toChannel: false
+      messages: [],
+      toChannel: false,
+      errors: {
+        createChannel: null,
+        goToChannel: null
+      },
+      alerts: null
     }
   }
-
-  // renderError = (error) => {
-  //   if (error) return (
-  //     <div className="errorMessageContainer">
-  //       <Alert message={error} type="error" showIcon />
-  //     </div>
-  //   )
-  // }
-  //
-  // renderResult = (result) => {
-  //   if (result) return (
-  //     <div className="errorMessageContainer">
-  //       <Alert message={result} type="error" showIcon />
-  //     </div>
-  //   )
-  // }
 
   goToChannel = (pin) => {
     this.setState({pin: pin, toChannel: true});
@@ -56,7 +43,8 @@ class Main extends React.Component {
       })
       .then(res => res.json())
       .then(res => this.setState({channel: {name: res.name, pin: res.pin}}))
-      .catch(err => this.setState({channel: {error: err}}))
+      .then(() => this.setState({alerts: `Channel created: ${this.state.channel.name} // Use pin: ${this.state.channel.pin}`}))
+      .catch(err => this.setState({errors: {createChannel: err}}))
   }
 
   render () {
@@ -74,11 +62,7 @@ class Main extends React.Component {
 
             <h2 className="instruction">Don't have a channel yet?</h2>
 
-            <Input placeholder={"Enter your new channel name"} enterButton={"Create"} onSearch={this.createChannel}/>
-
-            {this.state.channel.name ? <ChannelCreated name={this.state.channel.name} pin={this.state.channel.pin}/> : null}
-
-            {this.state.channel.error ? <ChannelCreated name={this.state.channel.name} err={this.state.channel.err}/> : null}
+            <Input placeholder={"Enter your new channel name"} enterButton={"Create"} onSearch={this.createChannel} error={this.state.errors.createChannel} alert={this.state.alerts} />
 
           <NotLoggedError logged={this.props.loginState.logged}/>
 
@@ -90,8 +74,6 @@ class Main extends React.Component {
 
 const mapStateToProps = (state) => ({
   loginState: state.login,
-  messages: state.messages,
-  infoMessages: state.infoMessages
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
